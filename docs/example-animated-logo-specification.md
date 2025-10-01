@@ -365,8 +365,8 @@ private void Move_MouseUp(object sender, MouseEventArgs e)
 **改進建議 / Improvement Suggestions:**
 ```csharp
 // 建議將硬編碼值提取為常數
-private const int TIMER_INTERVAL_MS = 1;
-private const int AUTO_CLOSE_SECONDS = 10;
+private const int TimerIntervalMs = 1;
+private const int AutoCloseSeconds = 10;
 ```
 
 ---
