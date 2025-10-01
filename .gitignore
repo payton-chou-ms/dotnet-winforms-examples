@@ -348,3 +348,7 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# Frontend build artifacts
+src/frontend/winforms-examples-web/dist/
+src/frontend/winforms-examples-web/.angular/

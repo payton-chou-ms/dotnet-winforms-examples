@@ -1,0 +1,16 @@
+<div class="splash-container">
+  <div class="splash-content">
+    <div class="logo-container">
+      <img [src]="logoUrl" alt="Application Logo" class="animated-logo" />
+    </div>
+    
+    <h1 class="app-title">{{ appTitle }}</h1>
+    <p class="app-version">Version {{ appVersion }}</p>
+    
+    <div class="progress-container">
+      <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+    </div>
+    
+    <p class="loading-text">Loading application...</p>
+  </div>
+</div>
