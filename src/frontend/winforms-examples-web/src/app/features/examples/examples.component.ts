@@ -1,14 +1,16 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ApiService } from '../../core/services/api.service';
 import { Example } from '../../core/models/example.model';
+import { CodeViewDialogComponent } from './code-view-dialog.component';
 
 @Component({
   selector: 'app-examples',
@@ -21,13 +23,16 @@ import { Example } from '../../core/models/example.model';
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDialogModule
   ],
   templateUrl: './examples.component.html',
   styleUrl: './examples.component.scss'
 })
 export class ExamplesComponent implements OnInit {
   private apiService = inject(ApiService);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
   
   examples: Example[] = [];
   categories: string[] = [];
@@ -71,11 +76,32 @@ export class ExamplesComponent implements OnInit {
     });
   }
 
+  viewDemo(example: Example): void {
+    const demoRoutes: { [key: string]: string } = {
+      'Resizeable Borderless Form Example': '/demo/borderless-form',
+      'Fade In Fade Out Example': '/demo/fade',
+      '2D Collision Example': '/demo/collision',
+      'Custom Button Examples': '/demo/custom-buttons',
+      'Navigation Bar Example': '/demo/navigation-bar',
+      'Transparent Screen Selector Form Example': '/demo/transparent-selector',
+      'Animated Control Resize': '/demo/animated-resize',
+      'Panels With Rounded Corners': '/demo/rounded-corners',
+      'Animated Logo On Launch': '/demo/animated-logo'
+    };
+    
+    const route = demoRoutes[example.title];
+    if (route) {
+      this.router.navigate([route]);
+    } else {
+      console.log('No demo available for:', example.title);
+    }
+  }
+
   viewCode(example: Example): void {
-    // Simple implementation: log to console
-    // In a real app, this would open a modal or navigate to a detail page
-    console.log('Code for:', example.title);
-    console.log(example.codeSnippet);
-    alert(`Code for ${example.title}\n\n${example.codeSnippet}`);
+    this.dialog.open(CodeViewDialogComponent, {
+      data: example,
+      width: '800px',
+      maxHeight: '80vh'
+    });
   }
 }
