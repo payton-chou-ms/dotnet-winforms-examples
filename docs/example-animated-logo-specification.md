@@ -321,12 +321,14 @@ private void Move_MouseUp(object sender, MouseEventArgs e)
 
 | 指標 / Metric | 要求 / Requirement | 測量方法 / Measurement |
 |--------------|-------------------|----------------------|
-| 計時器間隔 / Timer Interval | 1 毫秒 | 程式碼檢查 |
+| 計時器間隔 / Timer Interval | 建議 ≥ 10~16 毫秒（原規格：1 毫秒，見下方說明） | 程式碼檢查 |
 | 啟動時間 / Startup Time | < 100 毫秒 | 從 constructor 到第一幀顯示 |
 | 幀率 / Frame Rate | 取決於圖像 | 使用圖像的原生幀率 |
 | 記憶體使用 / Memory Usage | < 50 MB | 視窗顯示期間 |
 | CPU 使用率 / CPU Usage | < 5% | 正常運作時 |
 
+> **注意 / Note:**  
+> 原規格要求 1 毫秒計時器間隔（1000 Hz），但此頻率極高，可能導致不必要的 CPU 負載與效能問題。對於大多數動畫應用，建議使用 10~16 毫秒（約 60~100 FPS）即可達到流暢效果，並大幅降低系統資源消耗。若有特殊需求再考慮更高頻率，否則建議調整為較合理的間隔。
 **驗證方法 / Verification Methods:**
 - 使用 Performance Monitor 監測 CPU 和記憶體
 - 使用 Stopwatch 測量啟動時間
