@@ -30,6 +30,20 @@
 - Animated Control Resize Helper Method
 - Animated Logo On Launch (gif image)
 
+## Documentation / 文件
+
+📚 **[Code-to-Specification Guide](docs/README.md)** - Learn how to analyze legacy code and convert it to specification documents. / 學習如何分析舊程式碼並轉換為規格文件。
+
+This repository includes comprehensive documentation on:
+- Converting legacy code to specification documents (Scenario 1)
+- Best practices for reverse-engineering requirements
+- Practical examples with the AnimatedLogoForm component
+
+本儲存庫包含以下完整文件：
+- 將舊程式碼轉換為規格文件（場景一）
+- 逆向工程需求的最佳實踐
+- 使用 AnimatedLogoForm 組件的實際範例
+
 ## Getting Started
 
 1. Install [Visual Studio](https://visualstudio.microsoft.com/) if not already installed, and be sure to include the dependencies for .NET and desktop development.
