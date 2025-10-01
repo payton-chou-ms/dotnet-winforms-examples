@@ -2,10 +2,28 @@ import { Routes } from '@angular/router';
 import { SplashScreenComponent } from './features/splash-screen/splash-screen.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { ExamplesComponent } from './features/examples/examples.component';
+import { BorderlessFormDemoComponent } from './features/demos/borderless-form-demo.component';
+import { FadeDemoComponent } from './features/demos/fade-demo.component';
+import { CollisionDemoComponent } from './features/demos/collision-demo.component';
+import { CustomButtonsDemoComponent } from './features/demos/custom-buttons-demo.component';
+import { NavigationBarDemoComponent } from './features/demos/navigation-bar-demo.component';
+import { TransparentSelectorDemoComponent } from './features/demos/transparent-selector-demo.component';
+import { AnimatedResizeDemoComponent } from './features/demos/animated-resize-demo.component';
+import { RoundedCornersDemoComponent } from './features/demos/rounded-corners-demo.component';
+import { AnimatedLogoDemoComponent } from './features/demos/animated-logo-demo.component';
 
 export const routes: Routes = [
   { path: '', component: SplashScreenComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'examples', component: ExamplesComponent },
+  { path: 'demo/borderless-form', component: BorderlessFormDemoComponent },
+  { path: 'demo/fade', component: FadeDemoComponent },
+  { path: 'demo/collision', component: CollisionDemoComponent },
+  { path: 'demo/custom-buttons', component: CustomButtonsDemoComponent },
+  { path: 'demo/navigation-bar', component: NavigationBarDemoComponent },
+  { path: 'demo/transparent-selector', component: TransparentSelectorDemoComponent },
+  { path: 'demo/animated-resize', component: AnimatedResizeDemoComponent },
+  { path: 'demo/rounded-corners', component: RoundedCornersDemoComponent },
+  { path: 'demo/animated-logo', component: AnimatedLogoDemoComponent },
   { path: '**', redirectTo: '' }
 ];
