@@ -1,0 +1,944 @@
+openapi: 3.0.3
+info:
+  title: WinForms Examples API
+  description: |
+    RESTful API for WinForms Examples Web Application
+    
+    ## 概述 / Overview
+    
+    此 API 提供 WinForms 範例應用程式的後端服務，包含配置管理、範例內容、使用者認證等功能。
+    
+    This API provides backend services for the WinForms Examples application, including configuration management, example content, and user authentication.
+    
+    ## 認證 / Authentication
+    
+    API 使用 JWT Bearer Token 進行認證。請在請求標頭中包含：
+    ```
+    Authorization: Bearer {your_token}
+    ```
+    
+    ## 速率限制 / Rate Limiting
+    
+    - 每分鐘最多 60 個請求
+    - 超過限制將返回 429 Too Many Requests
+    
+  version: 1.0.0
+  contact:
+    name: Development Team
+    email: dev@example.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://api.example.com
+    description: Production server
+  - url: https://staging-api.example.com
+    description: Staging server
+  - url: http://localhost:5000
+    description: Local development server
+
+tags:
+  - name: Configuration
+    description: 配置管理 / Configuration management operations
+  - name: Examples
+    description: 範例管理 / Example management operations
+  - name: Authentication
+    description: 認證授權 / Authentication and authorization operations
+  - name: Users
+    description: 使用者管理 / User management operations
+
+paths:
+  /api/configuration/splash-screen:
+    get:
+      tags:
+        - Configuration
+      summary: 取得啟動畫面配置 / Get splash screen configuration
+      description: 取得啟動畫面的配置資訊，包含標誌 URL、顯示時間等
+      operationId: getSplashScreenConfig
+      responses:
+        '200':
+          description: 成功取得配置 / Configuration retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SplashScreenConfiguration'
+              example:
+                logoUrl: https://cdn.example.com/logo.gif
+                displayDuration: 10
+                redirectUrl: /dashboard
+                allowManualClose: true
+                showProgressBar: true
+        '404':
+          description: 配置不存在 / Configuration not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: 伺服器錯誤 / Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    
+    put:
+      tags:
+        - Configuration
+      summary: 更新啟動畫面配置 / Update splash screen configuration
+      description: 更新啟動畫面的配置資訊（需要管理員權限）
+      operationId: updateSplashScreenConfig
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SplashScreenConfiguration'
+            example:
+              logoUrl: https://cdn.example.com/logo.gif
+              displayDuration: 10
+              redirectUrl: /dashboard
+              allowManualClose: true
+              showProgressBar: true
+      responses:
+        '200':
+          description: 成功更新 / Configuration updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: 請求資料無效 / Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '401':
+          description: 未授權 / Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: 權限不足 / Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/examples:
+    get:
+      tags:
+        - Examples
+      summary: 取得所有範例 / Get all examples
+      description: 取得範例清單，支援分頁和分類篩選
+      operationId: getExamples
+      parameters:
+        - name: category
+          in: query
+          description: 範例分類篩選 / Filter by category
+          required: false
+          schema:
+            type: string
+            example: animations
+        - name: pageNumber
+          in: query
+          description: 頁碼 / Page number
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: pageSize
+          in: query
+          description: 每頁數量 / Page size
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+      responses:
+        '200':
+          description: 成功取得範例清單 / Examples retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedExamples'
+        '500':
+          description: 伺服器錯誤 / Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    
+    post:
+      tags:
+        - Examples
+      summary: 建立新範例 / Create new example
+      description: 建立新的範例（需要管理員權限）
+      operationId: createExample
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateExampleRequest'
+      responses:
+        '201':
+          description: 成功建立 / Example created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateExampleResponse'
+        '400':
+          description: 請求資料無效 / Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '401':
+          description: 未授權 / Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: 權限不足 / Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/examples/{id}:
+    get:
+      tags:
+        - Examples
+      summary: 取得單一範例 / Get example by ID
+      description: 根據 ID 取得特定範例的詳細資訊
+      operationId: getExampleById
+      parameters:
+        - name: id
+          in: path
+          description: 範例 ID / Example ID
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: 成功取得範例 / Example retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Example'
+        '404':
+          description: 範例不存在 / Example not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: 伺服器錯誤 / Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    
+    put:
+      tags:
+        - Examples
+      summary: 更新範例 / Update example
+      description: 更新特定範例的資訊（需要管理員權限）
+      operationId: updateExample
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: 範例 ID / Example ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateExampleRequest'
+      responses:
+        '200':
+          description: 成功更新 / Example updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: 請求資料無效 / Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '401':
+          description: 未授權 / Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: 權限不足 / Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 範例不存在 / Example not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    
+    delete:
+      tags:
+        - Examples
+      summary: 刪除範例 / Delete example
+      description: 刪除特定範例（需要管理員權限）
+      operationId: deleteExample
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: 範例 ID / Example ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 成功刪除 / Example deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '401':
+          description: 未授權 / Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: 權限不足 / Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 範例不存在 / Example not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: 使用者登入 / User login
+      description: 使用者登入並取得 JWT Token
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            example:
+              email: user@example.com
+              password: SecurePassword123!
+      responses:
+        '200':
+          description: 登入成功 / Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: 請求資料無效 / Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '401':
+          description: 認證失敗 / Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                statusCode: 401
+                message: Invalid email or password
+
+  /api/auth/register:
+    post:
+      tags:
+        - Authentication
+      summary: 使用者註冊 / User registration
+      description: 註冊新使用者帳號
+      operationId: register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+            example:
+              email: newuser@example.com
+              password: SecurePassword123!
+              name: Jane Doe
+      responses:
+        '201':
+          description: 註冊成功 / Registration successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterResponse'
+        '400':
+          description: 請求資料無效 / Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '409':
+          description: 電子郵件已存在 / Email already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/auth/refresh:
+    post:
+      tags:
+        - Authentication
+      summary: 刷新 Token / Refresh token
+      description: 使用 refresh token 取得新的 access token
+      operationId: refreshToken
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshTokenRequest'
+      responses:
+        '200':
+          description: Token 刷新成功 / Token refreshed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefreshTokenResponse'
+        '400':
+          description: 請求資料無效 / Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+        '401':
+          description: Token 無效或已過期 / Invalid or expired token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/auth/logout:
+    post:
+      tags:
+        - Authentication
+      summary: 使用者登出 / User logout
+      description: 撤銷使用者的 refresh token
+      operationId: logout
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: 登出成功 / Logout successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '401':
+          description: 未授權 / Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/users/me:
+    get:
+      tags:
+        - Users
+      summary: 取得當前使用者資訊 / Get current user info
+      description: 取得當前已登入使用者的詳細資訊
+      operationId: getCurrentUser
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: 成功取得使用者資訊 / User info retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: 未授權 / Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /health:
+    get:
+      tags:
+        - Health
+      summary: 健康檢查 / Health check
+      description: 檢查 API 服務健康狀態
+      operationId: healthCheck
+      responses:
+        '200':
+          description: 服務正常 / Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Healthy
+                  timestamp:
+                    type: string
+                    format: date-time
+                  version:
+                    type: string
+                    example: 1.0.0
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT Authorization header using the Bearer scheme
+
+  schemas:
+    SplashScreenConfiguration:
+      type: object
+      description: 啟動畫面配置 / Splash screen configuration
+      required:
+        - logoUrl
+        - displayDuration
+        - redirectUrl
+        - allowManualClose
+        - showProgressBar
+      properties:
+        logoUrl:
+          type: string
+          format: uri
+          description: 標誌圖片 URL / Logo image URL
+          example: https://cdn.example.com/logo.gif
+        displayDuration:
+          type: integer
+          description: 顯示時間（秒）/ Display duration (seconds)
+          minimum: 1
+          maximum: 60
+          example: 10
+        redirectUrl:
+          type: string
+          description: 重導向 URL / Redirect URL
+          example: /dashboard
+        allowManualClose:
+          type: boolean
+          description: 允許手動關閉 / Allow manual close
+          example: true
+        showProgressBar:
+          type: boolean
+          description: 顯示進度條 / Show progress bar
+          example: true
+
+    Example:
+      type: object
+      description: 範例資訊 / Example information
+      required:
+        - id
+        - title
+        - description
+        - category
+        - thumbnailUrl
+        - demoUrl
+      properties:
+        id:
+          type: integer
+          description: 範例 ID / Example ID
+          example: 1
+        title:
+          type: string
+          description: 標題 / Title
+          maxLength: 100
+          example: Animated Logo
+        description:
+          type: string
+          description: 說明 / Description
+          maxLength: 500
+          example: Splash screen with animated logo
+        category:
+          type: string
+          description: 分類 / Category
+          example: animations
+        thumbnailUrl:
+          type: string
+          format: uri
+          description: 縮圖 URL / Thumbnail URL
+          example: https://cdn.example.com/thumbnails/animated-logo.jpg
+        demoUrl:
+          type: string
+          description: 示範 URL / Demo URL
+          example: /examples/animated-logo
+        sourceCodeUrl:
+          type: string
+          format: uri
+          description: 原始碼 URL / Source code URL
+          nullable: true
+          example: https://github.com/example/animated-logo
+        details:
+          $ref: '#/components/schemas/ExampleDetails'
+        createdAt:
+          type: string
+          format: date-time
+          description: 建立時間 / Created timestamp
+          example: 2024-01-01T00:00:00Z
+        updatedAt:
+          type: string
+          format: date-time
+          description: 更新時間 / Updated timestamp
+          nullable: true
+          example: 2024-01-15T00:00:00Z
+
+    ExampleDetails:
+      type: object
+      description: 範例詳細資訊 / Example details
+      properties:
+        features:
+          type: array
+          description: 功能清單 / Features list
+          items:
+            type: string
+          example:
+            - Animated GIF support
+            - Auto-close timer
+            - Progress bar
+            - Manual close option
+        technologies:
+          type: array
+          description: 技術清單 / Technologies list
+          items:
+            type: string
+          example:
+            - Angular
+            - RxJS
+            - Angular Material
+        difficulty:
+          type: string
+          description: 難度 / Difficulty
+          enum:
+            - Beginner
+            - Intermediate
+            - Advanced
+          example: Beginner
+
+    CreateExampleRequest:
+      type: object
+      description: 建立範例請求 / Create example request
+      required:
+        - title
+        - description
+        - category
+        - thumbnailUrl
+        - demoUrl
+      properties:
+        title:
+          type: string
+          maxLength: 100
+          example: New Example
+        description:
+          type: string
+          maxLength: 500
+          example: Description of the example
+        category:
+          type: string
+          example: custom-controls
+        thumbnailUrl:
+          type: string
+          format: uri
+          example: https://cdn.example.com/thumbnails/new-example.jpg
+        demoUrl:
+          type: string
+          example: /examples/new-example
+        sourceCodeUrl:
+          type: string
+          format: uri
+          nullable: true
+          example: https://github.com/example/new-example
+
+    CreateExampleResponse:
+      type: object
+      description: 建立範例回應 / Create example response
+      properties:
+        id:
+          type: integer
+          example: 3
+        title:
+          type: string
+          example: New Example
+        message:
+          type: string
+          example: Example created successfully
+
+    UpdateExampleRequest:
+      type: object
+      description: 更新範例請求 / Update example request
+      required:
+        - title
+        - description
+        - category
+        - thumbnailUrl
+        - demoUrl
+      properties:
+        title:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 500
+        category:
+          type: string
+        thumbnailUrl:
+          type: string
+          format: uri
+        demoUrl:
+          type: string
+        sourceCodeUrl:
+          type: string
+          format: uri
+          nullable: true
+
+    PaginatedExamples:
+      type: object
+      description: 分頁範例清單 / Paginated examples list
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Example'
+        pageNumber:
+          type: integer
+          example: 1
+        pageSize:
+          type: integer
+          example: 10
+        totalCount:
+          type: integer
+          example: 2
+        totalPages:
+          type: integer
+          example: 1
+
+    LoginRequest:
+      type: object
+      description: 登入請求 / Login request
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          description: 電子郵件 / Email address
+          example: user@example.com
+        password:
+          type: string
+          format: password
+          description: 密碼 / Password
+          minLength: 8
+          example: SecurePassword123!
+
+    LoginResponse:
+      type: object
+      description: 登入回應 / Login response
+      properties:
+        token:
+          type: string
+          description: JWT Access Token
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        refreshToken:
+          type: string
+          description: Refresh Token
+          example: refresh_token_here
+        expiresIn:
+          type: integer
+          description: Token 有效期（秒）/ Token expiry (seconds)
+          example: 3600
+        user:
+          $ref: '#/components/schemas/User'
+
+    RegisterRequest:
+      type: object
+      description: 註冊請求 / Register request
+      required:
+        - email
+        - password
+        - name
+      properties:
+        email:
+          type: string
+          format: email
+          description: 電子郵件 / Email address
+          example: newuser@example.com
+        password:
+          type: string
+          format: password
+          description: 密碼 / Password
+          minLength: 8
+          pattern: ^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$
+          example: SecurePassword123!
+        name:
+          type: string
+          description: 使用者名稱 / User name
+          maxLength: 100
+          example: Jane Doe
+
+    RegisterResponse:
+      type: object
+      description: 註冊回應 / Register response
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: User registered successfully
+        userId:
+          type: integer
+          example: 2
+
+    RefreshTokenRequest:
+      type: object
+      description: 刷新 Token 請求 / Refresh token request
+      required:
+        - refreshToken
+      properties:
+        refreshToken:
+          type: string
+          description: Refresh Token
+          example: refresh_token_here
+
+    RefreshTokenResponse:
+      type: object
+      description: 刷新 Token 回應 / Refresh token response
+      properties:
+        token:
+          type: string
+          description: 新的 JWT Access Token / New JWT Access Token
+          example: new_access_token_here
+        refreshToken:
+          type: string
+          description: 新的 Refresh Token / New Refresh Token
+          example: new_refresh_token_here
+        expiresIn:
+          type: integer
+          description: Token 有效期（秒）/ Token expiry (seconds)
+          example: 3600
+
+    User:
+      type: object
+      description: 使用者資訊 / User information
+      properties:
+        id:
+          type: integer
+          description: 使用者 ID / User ID
+          example: 1
+        email:
+          type: string
+          format: email
+          description: 電子郵件 / Email address
+          example: user@example.com
+        name:
+          type: string
+          description: 使用者名稱 / User name
+          example: John Doe
+        roles:
+          type: array
+          description: 角色清單 / Roles list
+          items:
+            type: string
+          example:
+            - User
+
+    SuccessResponse:
+      type: object
+      description: 成功回應 / Success response
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: Operation completed successfully
+
+    ErrorResponse:
+      type: object
+      description: 錯誤回應 / Error response
+      properties:
+        statusCode:
+          type: integer
+          description: HTTP 狀態碼 / HTTP status code
+          example: 400
+        message:
+          type: string
+          description: 錯誤訊息 / Error message
+          example: An error occurred
+        detail:
+          type: string
+          description: 詳細錯誤訊息 / Detailed error message
+          nullable: true
+          example: Additional error details
+
+    ValidationErrorResponse:
+      type: object
+      description: 驗證錯誤回應 / Validation error response
+      properties:
+        statusCode:
+          type: integer
+          example: 400
+        message:
+          type: string
+          example: Validation failed
+        errors:
+          type: object
+          description: 驗證錯誤詳情 / Validation error details
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          example:
+            Title:
+              - Title is required
+            Email:
+              - Invalid email format
+        timestamp:
+          type: string
+          format: date-time
+          example: 2024-01-15T10:30:00Z
+        path:
+          type: string
+          example: /api/examples
