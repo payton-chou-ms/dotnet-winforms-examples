@@ -1162,6 +1162,8 @@ WinForms 可以直接存取檔案系統，但 Web 應用程式受限於瀏覽器
 
 ### 階段 3：開發階段 / Phase 3: Development
 
+**參考文件 / Reference Document:** [Phase 3: Development Overview](./phase-3-development-overview.md)
+
 - [ ] 建立開發環境
 - [ ] 實作前端基礎架構（路由、狀態管理）
 - [ ] 實作後端基礎架構（控制器、服務）
