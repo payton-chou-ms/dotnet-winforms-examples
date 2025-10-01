@@ -2,9 +2,9 @@
 
 ## 概述 / Overview
 
-本目錄包含專案的文件資源，重點說明如何從現有程式碼分析需求並轉換為規格文件。
+本目錄包含專案的文件資源，重點說明如何從現有程式碼分析需求並轉換為規格文件，以及如何將規格文件轉換為現代化前後端分離架構的新規格。
 
-This directory contains documentation resources for the project, focusing on how to analyze requirements from existing code and convert them into specification documents.
+This directory contains documentation resources for the project, focusing on how to analyze requirements from existing code and convert them into specification documents, as well as how to convert specification documents into modern frontend-backend separated architecture specifications.
 
 ---
 
@@ -37,7 +37,35 @@ This is a comprehensive guide that details the process of extracting requirement
 
 ---
 
-### 2. [AnimatedLogoForm 功能規格文件](./example-animated-logo-specification.md)
+### 2. [場景二：規格文件→新規格文件（前後端分離架構）](./scenario-2-specification-to-new-architecture.md)
+
+**Scenario 2: Specification Document → New Architecture Specification (Frontend-Backend Separation)**
+
+這是一份完整的指南，詳細說明如何將 Windows Forms 規格文件轉換為前後端分離架構（Angular + .NET）的新規格文件。
+
+This is a comprehensive guide that details the process of converting Windows Forms specification documents into new specification documents for a frontend-backend separated architecture (Angular + .NET).
+
+**內容包括 / Contents include:**
+- 架構轉型流程（7 個主要步驟）
+- 從桌面到 Web 的功能映射策略
+- Angular 前端規格撰寫指南
+- ASP.NET Core Web API 後端規格
+- 整合測試與驗證方法
+- 部署與維護最佳實踐
+- 實際的 AnimatedLogoForm Web 版本範例
+- 常見挑戰與解決方案
+- 完整的遷移檢查清單
+
+**適用對象 / Target Audience:**
+- 架構師
+- 全端開發工程師
+- 技術負責人
+- DevOps 工程師
+- 系統分析師
+
+---
+
+### 3. [AnimatedLogoForm 功能規格文件](./example-animated-logo-specification.md)
 
 **Functional Specification Document: AnimatedLogoForm**
 
@@ -69,16 +97,22 @@ This is a complete functional specification document example that demonstrates h
 建議的閱讀順序 / Recommended reading order:
 
 1. **開始閱讀：** [scenario-1-code-to-specification.md](./scenario-1-code-to-specification.md)
-   - 先了解整體方法論和流程
+   - 先了解如何從程式碼提取規格文件
+   - 理解整體方法論和流程
    
 2. **實例學習：** [example-animated-logo-specification.md](./example-animated-logo-specification.md)
    - 查看實際應用範例
    - 使用此文件作為範本
 
-3. **實際應用：** 
+3. **架構轉型：** [scenario-2-specification-to-new-architecture.md](./scenario-2-specification-to-new-architecture.md)
+   - 學習如何將規格文件轉換為新架構
+   - 理解前後端分離架構設計
+   - 掌握從桌面到 Web 的遷移策略
+
+4. **實際應用：** 
    - 選擇專案中的一個類別或組件
    - 應用學到的方法
-   - 創建自己的規格文件
+   - 創建自己的規格文件或規劃架構遷移
 
 ### 作為範本使用 / Using as Template
 
@@ -105,7 +139,8 @@ cp docs/example-animated-logo-specification.md docs/my-component-specification.m
 docs/
 ├── README.md                          # 本文件 / This file
 ├── methodology/
-│   └── scenario-1-code-to-specification.md
+│   ├── scenario-1-code-to-specification.md
+│   └── scenario-2-specification-to-new-architecture.md
 ├── specifications/
 │   ├── animated-logo-specification.md
 │   ├── slide-puzzle-specification.md

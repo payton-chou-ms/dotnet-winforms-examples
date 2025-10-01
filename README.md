@@ -32,16 +32,18 @@
 
 ## Documentation / 文件
 
-📚 **[Code-to-Specification Guide](docs/README.md)** - Learn how to analyze legacy code and convert it to specification documents. / 學習如何分析舊程式碼並轉換為規格文件。
+📚 **[Code-to-Specification Guide](docs/README.md)** - Learn how to analyze legacy code and convert it to specification documents, and transform specifications to modern architectures. / 學習如何分析舊程式碼並轉換為規格文件，以及如何將規格文件轉換為現代化架構。
 
 This repository includes comprehensive documentation on:
 - Converting legacy code to specification documents (Scenario 1)
-- Best practices for reverse-engineering requirements
+- Converting specifications to modern frontend-backend separated architecture (Scenario 2)
+- Best practices for reverse-engineering requirements and architectural transformation
 - Practical examples with the AnimatedLogoForm component
 
 本儲存庫包含以下完整文件：
 - 將舊程式碼轉換為規格文件（場景一）
-- 逆向工程需求的最佳實踐
+- 將規格文件轉換為現代化前後端分離架構（場景二）
+- 逆向工程需求與架構轉型的最佳實踐
 - 使用 AnimatedLogoForm 組件的實際範例
 
 ## Getting Started
