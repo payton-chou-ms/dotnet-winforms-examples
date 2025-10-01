@@ -64,4 +64,12 @@ export class ExamplesComponent implements OnInit {
       }
     });
   }
+
+  viewCode(example: Example): void {
+    // Simple implementation: log to console
+    // In a real app, this would open a modal or navigate to a detail page
+    console.log('Code for:', example.title);
+    console.log(example.codeSnippet);
+    alert(`Code for ${example.title}\n\n${example.codeSnippet}`);
+  }
 }
