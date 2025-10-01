@@ -103,7 +103,87 @@ This is a comprehensive Phase 1 planning document covering all planning work for
 
 ---
 
-### 4. [AnimatedLogoForm 功能規格文件](./example-animated-logo-specification.md)
+### 4. [階段 2：設計階段總覽](./phase-2-design-overview.md)
+
+**Phase 2: Design Phase Overview**
+
+這是一份完整的階段 2 設計文件索引，涵蓋前後端分離架構的所有設計文件。
+
+This is a comprehensive Phase 2 design documentation index covering all design documents for the frontend-backend separated architecture.
+
+**內容包括 / Contents include:**
+- 前端規格文件（Angular 架構、組件、路由、狀態管理）
+- 後端 API 規格文件（控制器、服務、DTOs、資料模型）
+- 資料庫結構設計（Entity Framework Core）
+- API 契約定義（OpenAPI/Swagger）
+- UI 線框圖與設計規範
+- 認證授權流程設計（JWT、OAuth 2.0）
+- Frontend specification (Angular architecture, components, routing, state management)
+- Backend API specification (controllers, services, DTOs, data models)
+- Database schema design (Entity Framework Core)
+- API contracts (OpenAPI/Swagger)
+- UI wireframes and design specifications
+- Authentication/authorization flow design (JWT, OAuth 2.0)
+
+**適用對象 / Target Audience:**
+- 前端開發工程師
+- 後端開發工程師
+- UI/UX 設計師
+- 架構師
+- 資料庫管理員
+- Frontend developers
+- Backend developers
+- UI/UX designers
+- Architects
+- Database administrators
+
+---
+
+### 5. [階段 3：開發階段總覽](./phase-3-development-overview.md)
+
+**Phase 3: Development Phase Overview**
+
+這是一份完整的階段 3 開發實作指南，提供從零開始建立前後端分離應用程式的詳細步驟。
+
+This is a comprehensive Phase 3 development implementation guide providing detailed steps to build a frontend-backend separated application from scratch.
+
+**內容包括 / Contents include:**
+- 開發環境完整設置（Node.js, Angular CLI, .NET SDK, Docker）
+- 前端專案建立與配置（Angular 17+）
+- 後端專案建立與配置（.NET 8+）
+- 核心服務實作（API Service, Auth Service, State Management）
+- HTTP 攔截器與路由守衛實作
+- 控制器與服務層實作（Clean Architecture）
+- 資料庫上下文與 Entity Framework 配置
+- JWT 認證授權完整實作
+- 單元測試（Angular Jasmine/Karma, .NET xUnit）
+- 整合測試（Playwright E2E, WebApplicationFactory）
+- Development environment complete setup (Node.js, Angular CLI, .NET SDK, Docker)
+- Frontend project creation and configuration (Angular 17+)
+- Backend project creation and configuration (.NET 8+)
+- Core services implementation (API Service, Auth Service, State Management)
+- HTTP interceptors and route guards implementation
+- Controllers and service layer implementation (Clean Architecture)
+- Database context and Entity Framework configuration
+- JWT authentication/authorization complete implementation
+- Unit testing (Angular Jasmine/Karma, .NET xUnit)
+- Integration testing (Playwright E2E, WebApplicationFactory)
+
+**適用對象 / Target Audience:**
+- 全端開發工程師
+- 前端開發工程師
+- 後端開發工程師
+- DevOps 工程師
+- QA 測試工程師
+- Full-stack developers
+- Frontend developers
+- Backend developers
+- DevOps engineers
+- QA test engineers
+
+---
+
+### 6. [AnimatedLogoForm 功能規格文件](./example-animated-logo-specification.md)
 
 **Functional Specification Document: AnimatedLogoForm**
 
@@ -155,7 +235,27 @@ This is a complete functional specification document example that demonstrates h
    - Understand architecture assessment, feature mapping, risk assessment
    - Learn how to develop timeline and resource plans
 
-5. **實際應用：** 
+5. **設計階段：** [phase-2-design-overview.md](./phase-2-design-overview.md)
+   - 查看完整的階段 2 設計文件索引
+   - 學習前端與後端規格文件撰寫
+   - 理解 UI/UX 設計與資料庫設計
+   - 掌握 API 契約定義與認證授權設計
+   - View complete Phase 2 design documentation index
+   - Learn frontend and backend specification writing
+   - Understand UI/UX design and database design
+   - Master API contract definition and authentication/authorization design
+
+6. **開發實作：** [phase-3-development-overview.md](./phase-3-development-overview.md)
+   - 學習如何設置完整的開發環境
+   - 掌握前後端專案建立與配置
+   - 實作核心功能與認證授權
+   - 撰寫單元測試與整合測試
+   - Learn how to set up complete development environment
+   - Master frontend and backend project creation and configuration
+   - Implement core features and authentication/authorization
+   - Write unit tests and integration tests
+
+7. **實際應用：** 
    - 選擇專案中的一個類別或組件
    - 應用學到的方法
    - 創建自己的規格文件或規劃架構遷移

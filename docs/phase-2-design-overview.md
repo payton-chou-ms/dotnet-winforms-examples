@@ -641,17 +641,36 @@ Phase 2 Design Phase is complete, including frontend specifications, backend API
 
 ### 6.1 階段 3：開發 / Phase 3: Development
 
+**參考文件 / Reference Document:** [Phase 3: Development Overview](./phase-3-development-overview.md)
+
 **預計時間 / Estimated Duration:** 8-12 週 / weeks
 
 **主要任務 / Key Tasks:**
-- 建立開發環境
-- 實作前端基礎架構
-- 實作後端基礎架構
-- 開發核心功能
-- 實作認證授權
-- 整合前後端
-- 編寫單元測試
-- 編寫整合測試
+- 建立開發環境 / Set up development environment
+- 實作前端基礎架構 / Implement frontend infrastructure
+- 實作後端基礎架構 / Implement backend infrastructure
+- 開發核心功能 / Develop core features
+- 實作認證授權 / Implement authentication/authorization
+- 整合前後端 / Integrate frontend and backend
+- 編寫單元測試 / Write unit tests
+- 編寫整合測試 / Write integration tests
+
+**完整的開發階段實作指南，包含：**
+- 開發環境設置步驟
+- 前端 Angular 專案建立與配置
+- 後端 .NET 專案建立與配置
+- 核心服務與控制器實作
+- 認證授權完整實作
+- 測試策略與範例程式碼
+
+**Complete development phase implementation guide including:**
+- Development environment setup steps
+- Frontend Angular project creation and configuration
+- Backend .NET project creation and configuration
+- Core services and controllers implementation
+- Authentication/authorization complete implementation
+- Testing strategies and example code
+
 
 ### 6.2 階段 4：測試 / Phase 4: Testing
 
