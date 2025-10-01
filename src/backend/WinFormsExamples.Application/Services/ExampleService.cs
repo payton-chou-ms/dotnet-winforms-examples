@@ -10,50 +10,148 @@ public class ExampleService : IExampleService
 
     public ExampleService()
     {
-        // Initialize with some sample data
+        // Initialize with WinForms examples data
         _examples = new List<Example>
         {
             new Example
             {
                 Id = 1,
-                Title = "Animated Logo Splash Screen",
-                Description = "A splash screen with animated GIF logo that displays for 10 seconds before transitioning to the main application.",
-                Category = "UI Components",
-                DifficultyLevel = "Beginner",
-                Technologies = new[] { "Angular", "TypeScript", "RxJS" },
-                CodeSnippet = "// Angular Component Example\n@Component({\n  selector: 'app-splash-screen',\n  templateUrl: './splash-screen.component.html'\n})\nexport class SplashScreenComponent implements OnInit {\n  progress = 0;\n  ngOnInit() {\n    // 10 second timer\n    timer(0, 100).subscribe(tick => {\n      this.progress = Math.min((tick / 100) * 100, 100);\n      if (tick >= 100) {\n        this.router.navigate(['/dashboard']);\n      }\n    });\n  }\n}",
-                ImageUrl = "/assets/images/animated-logo-example.png",
+                Title = "Resizeable Borderless Form Example",
+                Description = "A borderless window that can be moved, resized, minimized, and maximized like a standard window.",
+                Category = "Window Management",
+                DifficultyLevel = "Advanced",
+                Technologies = new[] { "WinForms", "C#", "Windows API" },
+                CodeSnippet = "// Borderless form with custom resize logic\nprotected override void WndProc(ref Message m)\n{\n    base.WndProc(ref m);\n    if (m.Msg == WM_NCHITTEST && (int)m.Result == HTCLIENT)\n        m.Result = (IntPtr)HTCAPTION;\n}",
+                ImageUrl = "/assets/images/resizeable-borderless-form.svg",
                 IsFavorite = false,
-                ViewCount = 150,
-                CreatedAt = DateTime.UtcNow.AddDays(-30)
+                ViewCount = 320,
+                CreatedAt = DateTime.UtcNow.AddDays(-50)
             },
             new Example
             {
                 Id = 2,
-                Title = "Custom Button Styles",
-                Description = "Custom styled buttons with hover effects and animations.",
-                Category = "UI Components",
-                DifficultyLevel = "Beginner",
-                Technologies = new[] { "Angular", "SCSS", "Material Design" },
-                CodeSnippet = "// SCSS Example\n.custom-button {\n  border-radius: 24px;\n  padding: 12px 24px;\n  transition: all 0.3s ease;\n  &:hover {\n    transform: scale(1.05);\n    box-shadow: 0 4px 8px rgba(0,0,0,0.2);\n  }\n}",
-                ImageUrl = "/assets/images/custom-buttons-example.png",
+                Title = "Slider Puzzle Example",
+                Description = "Interactive sliding puzzle game with customizable grid size and images.",
+                Category = "Games",
+                DifficultyLevel = "Intermediate",
+                Technologies = new[] { "WinForms", "C#", "Graphics" },
+                CodeSnippet = "// Puzzle tile click handler\nprivate void Tile_Click(object sender, EventArgs e)\n{\n    var tile = (Button)sender;\n    if (IsAdjacentToEmpty(tile))\n        SwapTiles(tile, emptyTile);\n}",
+                ImageUrl = "/assets/images/slider-puzzle.svg",
                 IsFavorite = true,
-                ViewCount = 230,
-                CreatedAt = DateTime.UtcNow.AddDays(-25)
+                ViewCount = 450,
+                CreatedAt = DateTime.UtcNow.AddDays(-45)
             },
             new Example
             {
                 Id = 3,
-                Title = "Navigation Bar",
-                Description = "Responsive navigation bar with dropdown menus and mobile support.",
-                Category = "Navigation",
-                DifficultyLevel = "Intermediate",
-                Technologies = new[] { "Angular", "Material Design", "Flex Layout" },
-                CodeSnippet = "// Navigation Component\n@Component({\n  selector: 'app-nav',\n  templateUrl: './nav.component.html'\n})\nexport class NavComponent {\n  menuItems = [\n    { label: 'Home', route: '/' },\n    { label: 'Examples', route: '/examples' },\n    { label: 'About', route: '/about' }\n  ];\n}",
-                ImageUrl = "/assets/images/navigation-example.png",
+                Title = "Fade In Fade Out Example",
+                Description = "Smooth fade in and fade out animations for forms and controls using opacity transitions.",
+                Category = "Animations",
+                DifficultyLevel = "Beginner",
+                Technologies = new[] { "WinForms", "C#", "Timer" },
+                CodeSnippet = "// Fade animation using Timer\nprivate void FadeIn()\n{\n    timer.Tick += (s, e) =>\n    {\n        Opacity += 0.05;\n        if (Opacity >= 1.0) timer.Stop();\n    };\n    timer.Start();\n}",
+                ImageUrl = "/assets/images/fade-in-fade-out.svg",
                 IsFavorite = false,
-                ViewCount = 180,
+                ViewCount = 280,
+                CreatedAt = DateTime.UtcNow.AddDays(-40)
+            },
+            new Example
+            {
+                Id = 4,
+                Title = "2D Collision Example",
+                Description = "Demonstrates 2D circle collision detection with physics-based movement and bouncing.",
+                Category = "Games",
+                DifficultyLevel = "Intermediate",
+                Technologies = new[] { "WinForms", "C#", "Math", "Graphics" },
+                CodeSnippet = "// Circle collision detection\nvar dx = circle1.X - circle2.X;\nvar dy = circle1.Y - circle2.Y;\nvar distance = Math.Sqrt(dx * dx + dy * dy);\nif (distance < circle1.Radius + circle2.Radius)\n    HandleCollision();",
+                ImageUrl = "/assets/images/2d-collision.svg",
+                IsFavorite = true,
+                ViewCount = 510,
+                CreatedAt = DateTime.UtcNow.AddDays(-35)
+            },
+            new Example
+            {
+                Id = 5,
+                Title = "Custom Button Examples",
+                Description = "Collection of custom-styled buttons including circular buttons and custom bordered buttons with hover effects.",
+                Category = "UI Components",
+                DifficultyLevel = "Beginner",
+                Technologies = new[] { "WinForms", "C#", "GDI+", "Custom Controls" },
+                CodeSnippet = "// Custom button with rounded corners\nprotected override void OnPaint(PaintEventArgs e)\n{\n    var path = GetRoundedRectPath(ClientRectangle, radius);\n    e.Graphics.FillPath(brush, path);\n}",
+                ImageUrl = "/assets/images/custom-buttons.svg",
+                IsFavorite = true,
+                ViewCount = 390,
+                CreatedAt = DateTime.UtcNow.AddDays(-30)
+            },
+            new Example
+            {
+                Id = 6,
+                Title = "Navigation Bar Example",
+                Description = "Responsive navigation bar with collapsible menu items and smooth transitions.",
+                Category = "UI Components",
+                DifficultyLevel = "Intermediate",
+                Technologies = new[] { "WinForms", "C#", "Custom Controls" },
+                CodeSnippet = "// Navigation bar with menu items\nprivate void AddMenuItem(string text, EventHandler onClick)\n{\n    var item = new ToolStripMenuItem(text);\n    item.Click += onClick;\n    menuStrip.Items.Add(item);\n}",
+                ImageUrl = "/assets/images/navigation-bar.svg",
+                IsFavorite = false,
+                ViewCount = 260,
+                CreatedAt = DateTime.UtcNow.AddDays(-25)
+            },
+            new Example
+            {
+                Id = 7,
+                Title = "Transparent Screen Selector Form",
+                Description = "A transparent overlay form that allows users to select a region of the screen with visual feedback.",
+                Category = "Utilities",
+                DifficultyLevel = "Advanced",
+                Technologies = new[] { "WinForms", "C#", "Graphics", "Screen Capture" },
+                CodeSnippet = "// Transparent screen selector\nprotected override CreateParams CreateParams\n{\n    get\n    {\n        var cp = base.CreateParams;\n        cp.ExStyle |= 0x00080000; // WS_EX_LAYERED\n        return cp;\n    }\n}",
+                ImageUrl = "/assets/images/transparent-screen-selector.svg",
+                IsFavorite = false,
+                ViewCount = 340,
                 CreatedAt = DateTime.UtcNow.AddDays(-20)
+            },
+            new Example
+            {
+                Id = 8,
+                Title = "Animated Control Resize",
+                Description = "Helper method for smoothly animating control size changes with easing functions.",
+                Category = "Animations",
+                DifficultyLevel = "Intermediate",
+                Technologies = new[] { "WinForms", "C#", "Timer", "Animation" },
+                CodeSnippet = "// Animated resize helper\npublic void AnimateResize(Control control, Size targetSize, int duration)\n{\n    var startSize = control.Size;\n    var timer = new Timer { Interval = 10 };\n    var elapsed = 0;\n    timer.Tick += (s, e) => {\n        elapsed += timer.Interval;\n        var progress = Math.Min(1.0, elapsed / (double)duration);\n        control.Size = Lerp(startSize, targetSize, progress);\n        if (progress >= 1.0) timer.Stop();\n    };\n    timer.Start();\n}",
+                ImageUrl = "/assets/images/animated-resize.svg",
+                IsFavorite = false,
+                ViewCount = 220,
+                CreatedAt = DateTime.UtcNow.AddDays(-15)
+            },
+            new Example
+            {
+                Id = 9,
+                Title = "Panels With Rounded Corners",
+                Description = "Custom panel controls with rounded corners and customizable border styles.",
+                Category = "UI Components",
+                DifficultyLevel = "Beginner",
+                Technologies = new[] { "WinForms", "C#", "GDI+", "Custom Controls" },
+                CodeSnippet = "// Panel with rounded corners\nprotected override void OnPaint(PaintEventArgs e)\n{\n    e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;\n    var path = GetRoundedRectPath(ClientRectangle, cornerRadius);\n    e.Graphics.FillPath(backgroundBrush, path);\n    e.Graphics.DrawPath(borderPen, path);\n}",
+                ImageUrl = "/assets/images/rounded-panels.svg",
+                IsFavorite = true,
+                ViewCount = 310,
+                CreatedAt = DateTime.UtcNow.AddDays(-10)
+            },
+            new Example
+            {
+                Id = 10,
+                Title = "Animated Logo On Launch",
+                Description = "Splash screen with animated GIF logo that displays during application startup.",
+                Category = "UI Components",
+                DifficultyLevel = "Beginner",
+                Technologies = new[] { "WinForms", "C#", "PictureBox", "Timer" },
+                CodeSnippet = "// Animated splash screen\nprivate void SplashScreen_Load(object sender, EventArgs e)\n{\n    pictureBox.Image = Image.FromFile(\"logo.gif\");\n    timer.Interval = 3000;\n    timer.Tick += (s, ev) => {\n        this.Close();\n        mainForm.Show();\n    };\n    timer.Start();\n}",
+                ImageUrl = "/assets/images/animated-logo.svg",
+                IsFavorite = false,
+                ViewCount = 410,
+                CreatedAt = DateTime.UtcNow.AddDays(-5)
             }
         };
     }

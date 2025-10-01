@@ -41,15 +41,21 @@ export class ExamplesComponent implements OnInit {
 
   loadExamples(): void {
     this.loading = true;
+    this.error = null;
+    console.log('Attempting to load examples from API...');
     this.apiService.getExamples(1, 20).subscribe({
       next: (result) => {
+        console.log('Successfully loaded examples:', result);
         this.examples = result.items;
         this.loading = false;
       },
       error: (err) => {
-        this.error = 'Failed to load examples';
+        console.error('Error loading examples - Full error:', err);
+        console.error('Error status:', err.status);
+        console.error('Error message:', err.message);
+        console.error('Error URL:', err.url);
+        this.error = `Failed to load examples: ${err.status || 'Unknown error'} - ${err.message || 'Please check console'}`;
         this.loading = false;
-        console.error('Error loading examples:', err);
       }
     });
   }
@@ -63,5 +69,13 @@ export class ExamplesComponent implements OnInit {
         console.error('Error loading categories:', err);
       }
     });
+  }
+
+  viewCode(example: Example): void {
+    // Simple implementation: log to console
+    // In a real app, this would open a modal or navigate to a detail page
+    console.log('Code for:', example.title);
+    console.log(example.codeSnippet);
+    alert(`Code for ${example.title}\n\n${example.codeSnippet}`);
   }
 }
