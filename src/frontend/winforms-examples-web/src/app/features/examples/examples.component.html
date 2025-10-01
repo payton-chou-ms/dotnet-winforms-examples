@@ -19,6 +19,8 @@
     
     <div *ngIf="!loading && !error" class="examples-grid">
       <mat-card *ngFor="let example of examples" class="example-card">
+        <img mat-card-image [src]="example.imageUrl" [alt]="example.title" class="example-image" />
+        
         <mat-card-header>
           <mat-card-title>{{ example.title }}</mat-card-title>
           <mat-card-subtitle>{{ example.category }}</mat-card-subtitle>

@@ -8,7 +8,7 @@ import { Example, PaginatedResult, SplashScreenConfiguration } from '../models/e
 })
 export class ApiService {
   private http = inject(HttpClient);
-  private readonly apiUrl = 'https://localhost:7001/api'; // Update with actual API URL
+  private readonly apiUrl = 'http://localhost:5002/api'; // Backend API URL
 
   getSplashScreenConfiguration(): Observable<SplashScreenConfiguration> {
     return this.http.get<SplashScreenConfiguration>(`${this.apiUrl}/configuration/splash-screen`);
