@@ -8,7 +8,20 @@ import { Example, PaginatedResult, SplashScreenConfiguration } from '../models/e
 })
 export class ApiService {
   private http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:5002/api'; // Backend API URL
+  // Use Codespaces URL if available, otherwise fallback to localhost
+  private readonly apiUrl = this.getApiUrl();
+
+  private getApiUrl(): string {
+    // Check if running in GitHub Codespaces
+    const hostname = window.location.hostname;
+    if (hostname.includes('app.github.dev') || hostname.includes('preview.app.github.dev')) {
+      // Extract codespace name and construct backend URL
+      const port = 5002;
+      return `https://${hostname.replace('-4200', `-${port}`)}/api`;
+    }
+    // Fallback to localhost for local development
+    return 'http://localhost:5002/api';
+  }
 
   getSplashScreenConfiguration(): Observable<SplashScreenConfiguration> {
     return this.http.get<SplashScreenConfiguration>(`${this.apiUrl}/configuration/splash-screen`);

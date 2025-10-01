@@ -23,7 +23,18 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularApp", policy =>
     {
-        policy.WithOrigins("http://localhost:4200", "https://localhost:4200")
+        policy.SetIsOriginAllowed(origin =>
+              {
+                  // Allow localhost for local development
+                  if (origin.StartsWith("http://localhost:") || origin.StartsWith("https://localhost:"))
+                      return true;
+                  
+                  // Allow GitHub Codespaces URLs
+                  if (origin.Contains("app.github.dev") || origin.Contains("preview.app.github.dev"))
+                      return true;
+                  
+                  return false;
+              })
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowCredentials();
@@ -50,7 +61,8 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
+// Comment out HTTPS redirection for development to avoid issues
+// app.UseHttpsRedirection();
 
 app.UseCors("AllowAngularApp");
 
