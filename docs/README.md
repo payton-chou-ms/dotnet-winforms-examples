@@ -65,7 +65,45 @@ This is a comprehensive guide that details the process of converting Windows For
 
 ---
 
-### 3. [AnimatedLogoForm 功能規格文件](./example-animated-logo-specification.md)
+### 3. [階段 1：規劃階段完整文件](./phase-1-planning.md)
+
+**Phase 1: Planning Phase Complete Documentation**
+
+這是一份完整的階段 1 規劃文件，涵蓋 WinForms 應用程式轉換為現代化 Web 應用程式（Angular + .NET Core）的所有規劃工作。
+
+This is a comprehensive Phase 1 planning document covering all planning work for migrating the WinForms application to a modern web application (Angular + .NET Core).
+
+**內容包括 / Contents include:**
+- 完整的架構評估文件（現有 vs 目標架構）
+- 所有需要遷移的功能清單與分類
+- 詳細的功能映射表（WinForms → Web）
+- 技術風險評估與緩解策略
+- 完整的 6-8 個月遷移時間表
+- 人力與預算資源需求評估
+- ROI 分析與投資回報
+- Complete architecture assessment (existing vs target)
+- Complete feature inventory and categorization
+- Detailed feature mapping table (WinForms → Web)
+- Technical risk assessment with mitigation strategies
+- Complete 6-8 month migration timeline
+- Personnel and budget resource requirements
+- ROI analysis and investment returns
+
+**適用對象 / Target Audience:**
+- 專案經理
+- 技術主管
+- 產品負責人
+- 利害關係人
+- 決策者
+- Project managers
+- Technical leads
+- Product owners
+- Stakeholders
+- Decision makers
+
+---
+
+### 4. [AnimatedLogoForm 功能規格文件](./example-animated-logo-specification.md)
 
 **Functional Specification Document: AnimatedLogoForm**
 
@@ -109,7 +147,15 @@ This is a complete functional specification document example that demonstrates h
    - 理解前後端分離架構設計
    - 掌握從桌面到 Web 的遷移策略
 
-4. **實際應用：** 
+4. **規劃執行：** [phase-1-planning.md](./phase-1-planning.md)
+   - 查看完整的階段 1 規劃範例
+   - 理解架構評估、功能映射、風險評估
+   - 學習如何制定時程與資源計畫
+   - View complete Phase 1 planning example
+   - Understand architecture assessment, feature mapping, risk assessment
+   - Learn how to develop timeline and resource plans
+
+5. **實際應用：** 
    - 選擇專案中的一個類別或組件
    - 應用學到的方法
    - 創建自己的規格文件或規劃架構遷移
