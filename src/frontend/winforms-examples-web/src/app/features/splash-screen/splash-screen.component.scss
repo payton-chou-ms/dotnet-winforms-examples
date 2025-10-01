@@ -1,0 +1,61 @@
+.splash-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+}
+
+.splash-content {
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+}
+
+.logo-container {
+  margin-bottom: 30px;
+}
+
+.animated-logo {
+  max-width: 200px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.app-title {
+  color: white;
+  font-size: 2rem;
+  font-weight: 300;
+  margin: 20px 0 10px;
+}
+
+.app-version {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  margin-bottom: 40px;
+}
+
+.progress-container {
+  margin: 30px 0;
+  
+  mat-progress-bar {
+    height: 6px;
+    border-radius: 3px;
+  }
+}
+
+.loading-text {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
